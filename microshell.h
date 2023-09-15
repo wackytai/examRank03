@@ -12,5 +12,3 @@ int	main(int argc, char **argv, char **envp);
 int	error_message(char *s1, char *s2);
 int	ft_cd(char **argv, int i);
 int	ft_executer(char **argv, int i, char **envp);
-
-#endif

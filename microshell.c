@@ -1,28 +1,5 @@
 #include "microshell.h"
 
-int	main(int argc, char **argv, char **envp)
-{
-	int	i;
-	int	status;
-
-	i = 0;
-	status = 0;
-	if (argc < 2)
-		return (status);
-	while (argv[i] && argv[++i])
-	{
-		argv += i;
-		i = 0;
-		while (argv[i] && strcmp(argv[i], "|") && strcmp(argv[i], ";"))
-			i++;
-		if (!strcmp(*argv, "cd"))
-			status = ft_cd(argv, i);
-		else if (i)
-			status = ft_executer(argv, i, envp);
-	}
-	return (0);
-}
-
 int	error_message(char *s1, char *s2)
 {
 	int	i;
@@ -79,4 +56,27 @@ int	ft_executer(char **argv, int i, char **envp)
 			|| close(fd[1] == -1)))
 		exit (error_message("error: fatal", 0));
 	return (WIFEXITED(status) && WEXITSTATUS(status));
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	int	i;
+	int	status;
+
+	i = -1;
+	status = 0;
+	if (argc < 2)
+		return (status);
+	while (argv[i] && argv[++i])
+	{
+		argv += i;
+		i = 0;
+		while (argv[i] && strcmp(argv[i], "|") && strcmp(argv[i], ";"))
+			i++;
+		if (!strcmp(*argv, "cd"))
+			status = ft_cd(argv, i);
+		else if (i)
+			status = ft_executer(argv, i, envp);
+	}
+	return (status);
 }
